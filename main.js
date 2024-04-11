@@ -21,19 +21,45 @@ if (pinAnswer.Pin === myPin) {
         },
     ]);
     if (operation.operation === "Withdraw") {
-        let amount = await inquirer.prompt([
+        let withdraw = await inquirer.prompt([
             {
-                name: "amount",
-                message: "Enter your amount",
-                type: "number",
+                name: "withdrawMethod",
+                messege: "select one option:",
+                type: "list",
+                choices: ["fast cash", "enter amount"],
             },
         ]);
-        if (amount.amount >= myBalance) {
-            console.log("Insufficient Balance");
+        if (withdraw.withdrawMethod === "enter amount") {
+            let amount = await inquirer.prompt([
+                {
+                    name: "amount",
+                    message: "Enter your amount",
+                    type: "number",
+                },
+            ]);
+            if (amount.amount >= myBalance) {
+                console.log("Insufficient Balance");
+            }
+            else {
+                myBalance -= amount.amount;
+                console.log(`Your Availble Balance is ${myBalance}`);
+            }
         }
-        else {
-            myBalance -= amount.amount;
-            console.log(`Your Availble Balance is ${myBalance}`);
+        if (withdraw.withdrawMethod === "fast cash") {
+            let fastCash = await inquirer.prompt([{
+                    name: "fastCash",
+                    message: "Select Amount",
+                    type: "list",
+                    choices: ["100", "500", "1000", "10000", "30000"]
+                }]);
+            if (fastCash.fastCash > myBalance) {
+                console.log("insufficient balance");
+            }
+            else {
+                myBalance -= fastCash.fastCash;
+                console.log("withdrawn successfully");
+                console.log(`your remaining balance is ${myBalance}`);
+            }
         }
     }
     else if (operation.operation === "Check available balance") {
@@ -41,5 +67,5 @@ if (pinAnswer.Pin === myPin) {
     }
 }
 else {
-    console.log("Incorrect pin code TRY AGAIN");
+    console.log("Pin is Incorrect Try Again!");
 }

@@ -26,7 +26,17 @@ let operation = await inquirer.prompt([
   },
 ]);
 
-if (operation.operation === "Withdraw") {
+if (operation.operation === "Withdraw"){
+  let withdraw = await inquirer.prompt ([
+{
+    name :"withdrawMethod",
+    messege:"select one option:",
+    type:"list",
+    choices:["fast cash" , "enter amount"],
+  },
+]);
+if( withdraw.withdrawMethod === "enter amount")
+{
   let amount = await inquirer.prompt([
     {
       name: "amount",
@@ -36,20 +46,36 @@ if (operation.operation === "Withdraw") {
   ]);
   if(amount.amount >= myBalance){
    console.log ("Insufficient Balance");
+  
   }else{
   myBalance -= amount.amount;
   console.log (`Your Availble Balance is ${myBalance}`)}
 }
 
-
+ if (withdraw.withdrawMethod === "fast cash"){
+ let fastCash = await inquirer.prompt ([{
+  name:"fastCash",
+  message: "Select Amount",
+  type: "list",
+  choices:["100","500","1000","10000","30000"]
+ }])
+ if(fastCash.fastCash>myBalance){
+  console.log("insufficient balance");
+ }
+ else  {
+myBalance -=fastCash.fastCash
+console.log("withdrawn successfully")
+console.log(`your remaining balance is ${myBalance}`)
+ }
+}
+}
  else if (operation.operation === "Check available balance"){
    console.log (`Your Available Balance is ${myBalance}`)
-}
+ }
 }
 else {
-   console.log("Incorrect pin code TRY AGAIN");
+  console.log ("Pin is Incorrect Try Again!");
 }
-
 
 
 
