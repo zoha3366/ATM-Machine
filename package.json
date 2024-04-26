@@ -1,6 +1,6 @@
 {
   "name": "zo24atm-machine",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "made an atm machine using typeScript,node.js and inquirer",
   "main": "main.js",
   "type": "module",
